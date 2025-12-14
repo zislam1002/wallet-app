@@ -12,6 +12,7 @@ import {
     SafeAreaView,
     Alert,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../theme/ThemeProvider';
@@ -184,16 +185,16 @@ export const ProfileScreen = () => {
                     }}
                 >
                     <View style={styles.userInfo}>
-                        <View
-                            style={[
-                                styles.avatar,
-                                { backgroundColor: theme.colors.primary },
-                            ]}
+                        <LinearGradient
+                            colors={[theme.colors.gradientStart, theme.colors.gradientMiddle, theme.colors.gradientEnd]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 1 }}
+                            style={styles.avatar}
                         >
                             <Text style={styles.avatarText}>
                                 {user?.email?.charAt(0).toUpperCase() || 'U'}
                             </Text>
-                        </View>
+                        </LinearGradient>
                         <View style={styles.userDetails}>
                             <Text
                                 style={[
@@ -274,6 +275,56 @@ export const ProfileScreen = () => {
                     </View>
                 </Card>
 
+                {/* Quick Help Card */}
+                <LinearGradient
+                    colors={[`${theme.colors.gradientStart}15`, `${theme.colors.gradientEnd}15`]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={{
+                        padding: theme.spacing.lg,
+                        marginBottom: theme.spacing.lg,
+                        borderRadius: theme.borderRadius.lg,
+                        borderWidth: 1,
+                        borderColor: `${theme.colors.primary}30`,
+                    }}
+                >
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: theme.spacing.xs }}>
+                        <LinearGradient
+                            colors={[theme.colors.gradientStart, theme.colors.gradientEnd]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 1 }}
+                            style={{
+                                width: 32,
+                                height: 32,
+                                borderRadius: 16,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginRight: theme.spacing.sm,
+                            }}
+                        >
+                            <Ionicons name="help-circle" size={18} color="#fff" />
+                        </LinearGradient>
+                        <Text
+                            style={{
+                                fontSize: theme.fontSize.md,
+                                fontWeight: theme.fontWeight.bold,
+                                color: theme.colors.text,
+                            }}
+                        >
+                            Need Help?
+                        </Text>
+                    </View>
+                    <Text
+                        style={{
+                            fontSize: theme.fontSize.sm,
+                            color: theme.colors.textSecondary,
+                            lineHeight: 20,
+                        }}
+                    >
+                        Check out our beginner's guide or contact support if you have questions.
+                    </Text>
+                </LinearGradient>
+
                 {/* Account Section */}
                 <Text
                     style={[
@@ -281,18 +332,18 @@ export const ProfileScreen = () => {
                         { color: theme.colors.textSecondary },
                     ]}
                 >
-                    ACCOUNT
+                    YOUR ACCOUNT
                 </Text>
                 <Card variant="elevated" style={{ marginBottom: theme.spacing.lg }}>
                     <MenuItem
                         icon="gift"
-                        label="Rewards"
+                        label="Rewards & Points"
                         value={`${user?.rewards || 0} EXP`}
                         onPress={() => navigation.navigate('Rewards' as never)}
                     />
                     <MenuItem
                         icon="wallet"
-                        label="Payment Methods"
+                        label="My Wallets"
                         onPress={() => { }}
                     />
                     <MenuItem
@@ -341,24 +392,29 @@ export const ProfileScreen = () => {
                     />
                 </Card>
 
-                {/* Support Section */}
+                {/* Learning & Support */}
                 <Text
                     style={[
                         styles.sectionTitle,
                         { color: theme.colors.textSecondary },
                     ]}
                 >
-                    SUPPORT
+                    LEARNING & SUPPORT
                 </Text>
                 <Card variant="elevated" style={{ marginBottom: theme.spacing.lg }}>
                     <MenuItem
-                        icon="help-circle"
-                        label="Help Center"
+                        icon="school"
+                        label="Crypto Basics Guide"
                         onPress={() => { }}
                     />
                     <MenuItem
-                        icon="chatbubble"
-                        label="Contact Support"
+                        icon="help-circle"
+                        label="Help Center & FAQs"
+                        onPress={() => { }}
+                    />
+                    <MenuItem
+                        icon="chatbubble-ellipses"
+                        label="Chat with Support"
                         onPress={() => { }}
                     />
                     <MenuItem

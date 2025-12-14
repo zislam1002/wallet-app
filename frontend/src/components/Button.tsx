@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
-    TouchableOpacity,
+    Animated,
+    Pressable,
     Text,
     StyleSheet,
     ActivityIndicator,
@@ -33,6 +34,7 @@ export const Button: React.FC<ButtonProps> = ({
     textStyle,
 }) => {
     const { theme } = useTheme();
+    const scale = useRef(new Animated.Value(1)).current;
 
     const getBackgroundColor = () => {
         if (disabled) return theme.colors.textTertiary;
@@ -87,42 +89,56 @@ export const Button: React.FC<ButtonProps> = ({
         }
     };
 
+    const handlePressIn = () => {
+        Animated.spring(scale, { toValue: 0.97, useNativeDriver: true, friction: 7 }).start();
+    };
+
+    const handlePressOut = () => {
+        Animated.spring(scale, { toValue: 1, useNativeDriver: true, friction: 7 }).start();
+    };
+
     return (
-        <TouchableOpacity
+        <Pressable
             onPress={onPress}
             disabled={disabled || loading}
-            style={[
-                styles.button,
-                {
-                    backgroundColor: getBackgroundColor(),
-                    borderRadius: theme.borderRadius.md,
-                    borderWidth: variant === 'outline' ? 2 : 0,
-                    borderColor: variant === 'outline' ? theme.colors.primary : 'transparent',
-                    ...getPadding(),
-                    width: fullWidth ? '100%' : 'auto',
-                    opacity: disabled ? 0.5 : 1,
-                },
-                style,
-            ]}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+            style={{ width: fullWidth ? '100%' : undefined }}
         >
-            {loading ? (
-                <ActivityIndicator color={getTextColor()} />
-            ) : (
-                <Text
-                    style={[
-                        styles.text,
-                        {
-                            color: getTextColor(),
-                            fontSize: getFontSize(),
-                            fontWeight: theme.fontWeight.semibold,
-                        },
-                        textStyle,
-                    ]}
-                >
-                    {title}
-                </Text>
-            )}
-        </TouchableOpacity>
+            <Animated.View
+                style={[
+                    styles.button,
+                    {
+                        transform: [{ scale }],
+                        backgroundColor: getBackgroundColor(),
+                        borderRadius: theme.borderRadius.md,
+                        borderWidth: variant === 'outline' ? 2 : 0,
+                        borderColor: variant === 'outline' ? theme.colors.primary : 'transparent',
+                        ...getPadding(),
+                        opacity: disabled ? 0.5 : 1,
+                    },
+                    style,
+                ]}
+            >
+                {loading ? (
+                    <ActivityIndicator color={getTextColor()} />
+                ) : (
+                    <Text
+                        style={[
+                            styles.text,
+                            {
+                                color: getTextColor(),
+                                fontSize: getFontSize(),
+                                fontWeight: theme.fontWeight.semibold,
+                            },
+                            textStyle,
+                        ]}
+                    >
+                        {title}
+                    </Text>
+                )}
+            </Animated.View>
+        </Pressable>
     );
 };
 

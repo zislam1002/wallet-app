@@ -25,6 +25,11 @@ import { RewardsScreen } from '../screens/profile/RewardsScreen';
 import { SettingsScreen } from '../screens/profile/SettingsScreen';
 import { SendScreen } from '../screens/payments/SendScreen';
 import { ReceiveScreen } from '../screens/payments/ReceiveScreen';
+import { PortfolioScreen } from '../screens/portfolio/PortfolioScreen';
+import { SwapScreen } from '../screens/swap/SwapScreen';
+import { BridgeScreen } from '../screens/bridge/BridgeScreen';
+import { SecurityCenterScreen } from '../screens/security/SecurityCenterScreen';
+import { LearnScreen } from '../screens/LearnScreen';
 import { Text, View } from 'react-native';
 
 const Stack = createNativeStackNavigator();
@@ -37,10 +42,6 @@ const PlaceholderScreen = ({ name }: { name: string }) => (
     </View>
 );
 
-const PortfolioScreen = () => <PlaceholderScreen name="Portfolio" />;
-const SwapScreen = () => <PlaceholderScreen name="Swap" />;
-const BridgeScreen = () => <PlaceholderScreen name="Bridge" />;
-const SecurityCenterScreen = () => <PlaceholderScreen name="Security Center" />;
 const AccountRecoveryScreen = () => <PlaceholderScreen name="Account Recovery" />;
 
 // Stack navigators for each tab
@@ -49,6 +50,7 @@ const HomeStack = () => {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Portfolio" component={PortfolioScreen} />
+            <Stack.Screen name="Learn" component={LearnScreen} />
         </Stack.Navigator>
     );
 };
@@ -64,7 +66,7 @@ const PaymentsStack = () => {
 
 const DiscoverStack = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: true }}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Swap" component={SwapScreen} />
             <Stack.Screen name="Bridge" component={BridgeScreen} />
         </Stack.Navigator>
@@ -73,7 +75,7 @@ const DiscoverStack = () => {
 
 const SecurityStack = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: true }}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="SecurityCenter" component={SecurityCenterScreen} options={{ title: 'Security' }} />
             <Stack.Screen name="AccountRecovery" component={AccountRecoveryScreen} options={{ title: 'Recovery' }} />
         </Stack.Navigator>
@@ -94,6 +96,19 @@ const ProfileStack = () => {
 const MainTabs = () => {
     const { theme } = useTheme();
 
+    const TabIcon = ({ name, color, size, focused }: { name: any; color: string; size: number; focused: boolean }) => (
+        <View style={{
+            width: 48,
+            height: 48,
+            borderRadius: 24,
+            backgroundColor: focused ? `${theme.colors.primary}20` : 'transparent',
+            justifyContent: 'center',
+            alignItems: 'center',
+        }}>
+            <Ionicons name={name} size={size} color={color} />
+        </View>
+    );
+
     return (
         <Tab.Navigator
             screenOptions={{
@@ -102,7 +117,8 @@ const MainTabs = () => {
                 tabBarInactiveTintColor: theme.colors.textSecondary,
                 tabBarStyle: {
                     backgroundColor: theme.colors.card,
-                    borderTopWidth: 0,
+                    borderTopWidth: 1,
+                    borderTopColor: theme.colors.border,
                     elevation: 0,
                     height: 88,
                     paddingBottom: 34,
@@ -115,8 +131,8 @@ const MainTabs = () => {
                 component={HomeStack}
                 options={{
                     tabBarLabel: 'Home',
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="home" size={size} color={color} />
+                    tabBarIcon: ({ color, size, focused }) => (
+                        <TabIcon name="home" color={color} size={size} focused={focused} />
                     ),
                 }}
             />
@@ -125,8 +141,8 @@ const MainTabs = () => {
                 component={PaymentsStack}
                 options={{
                     tabBarLabel: 'Payments',
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="card" size={size} color={color} />
+                    tabBarIcon: ({ color, size, focused }) => (
+                        <TabIcon name="card" color={color} size={size} focused={focused} />
                     ),
                 }}
             />
@@ -135,8 +151,8 @@ const MainTabs = () => {
                 component={DiscoverStack}
                 options={{
                     tabBarLabel: 'Discover',
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="compass" size={size} color={color} />
+                    tabBarIcon: ({ color, size, focused }) => (
+                        <TabIcon name="compass" color={color} size={size} focused={focused} />
                     ),
                 }}
             />
@@ -145,8 +161,8 @@ const MainTabs = () => {
                 component={SecurityStack}
                 options={{
                     tabBarLabel: 'Security',
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="shield-checkmark" size={size} color={color} />
+                    tabBarIcon: ({ color, size, focused }) => (
+                        <TabIcon name="shield-checkmark" color={color} size={size} focused={focused} />
                     ),
                 }}
             />
@@ -155,8 +171,8 @@ const MainTabs = () => {
                 component={ProfileStack}
                 options={{
                     tabBarLabel: 'Profile',
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="person" size={size} color={color} />
+                    tabBarIcon: ({ color, size, focused }) => (
+                        <TabIcon name="person" color={color} size={size} focused={focused} />
                     ),
                 }}
             />

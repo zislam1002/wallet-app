@@ -13,6 +13,7 @@ import {
     Alert,
     ScrollView,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../theme/ThemeProvider';
@@ -27,6 +28,7 @@ export const ReceiveScreen = () => {
     const { wallets } = useWalletStore();
 
     const [selectedWallet, setSelectedWallet] = useState(wallets[0]);
+    const [showHelp, setShowHelp] = useState(true);
 
     const handleCopy = async () => {
         if (selectedWallet) {
@@ -68,9 +70,84 @@ export const ReceiveScreen = () => {
                 contentContainerStyle={styles.scrollContent}
                 showsVerticalScrollIndicator={false}
             >
-                {/* Wallet Selection */}
-                <Text style={[styles.label, { color: theme.colors.text }]}>
-                    Select Network
+                {/* Explanation Card with Gradient */}
+                <LinearGradient
+                    colors={[`${theme.colors.success}15`, `${theme.colors.gradientMiddle}15`]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={{
+                        padding: theme.spacing.lg,
+                        marginBottom: theme.spacing.xl,
+                        borderRadius: theme.borderRadius.lg,
+                        borderWidth: 1,
+                        borderColor: `${theme.colors.success}30`,
+                    }}
+                >
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                        <LinearGradient
+                            colors={[theme.colors.success, theme.colors.gradientMiddle]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 1 }}
+                            style={{
+                                width: 40,
+                                height: 40,
+                                borderRadius: 20,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginRight: theme.spacing.md,
+                            }}
+                        >
+                            <Text style={{ fontSize: 20 }}>📥</Text>
+                        </LinearGradient>
+                        <View style={{ flex: 1 }}>
+                            <Text
+                                style={{
+                                    fontSize: theme.fontSize.md,
+                                    fontWeight: theme.fontWeight.bold,
+                                    color: theme.colors.text,
+                                    marginBottom: theme.spacing.xs,
+                                }}
+                            >
+                                How to Receive Crypto
+                            </Text>
+                            <Text
+                                style={{
+                                    fontSize: theme.fontSize.sm,
+                                    color: theme.colors.textSecondary,
+                                    lineHeight: 20,
+                                }}
+                            >
+                                1. Choose which type of crypto you want to receive{`\n`}
+                                2. Share your wallet address with the sender{`\n`}
+                                3. Wait for them to send - you'll see it appear automatically!
+                            </Text>
+                        </View>
+                    </View>
+                </LinearGradient>
+
+                {/* Step 1 */}
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: theme.spacing.md }}>
+                    <LinearGradient
+                        colors={[theme.colors.success, theme.colors.gradientMiddle]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={{
+                            width: 24,
+                            height: 24,
+                            borderRadius: 12,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: theme.spacing.sm,
+                        }}
+                    >
+                        <Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>1</Text>
+                    </LinearGradient>
+                    <Text style={[styles.label, { color: theme.colors.text, fontWeight: theme.fontWeight.bold }]}>
+                        Select Which Crypto to Receive
+                    </Text>
+                </View>
+                <Text style={{ fontSize: theme.fontSize.xs, color: theme.colors.textSecondary, marginBottom: theme.spacing.sm }}>
+                    Make sure the sender is sending the same type of crypto!
                 </Text>
                 <View style={styles.walletList}>
                     {wallets.map((wallet) => (
@@ -142,13 +219,35 @@ export const ReceiveScreen = () => {
                     ))}
                 </View>
 
-                {/* QR Code Placeholder */}
+                {/* Step 2 - QR Code */}
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: theme.spacing.xl, marginBottom: theme.spacing.md }}>
+                    <LinearGradient
+                        colors={[theme.colors.success, theme.colors.gradientMiddle]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={{
+                            width: 24,
+                            height: 24,
+                            borderRadius: 12,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: theme.spacing.sm,
+                        }}
+                    >
+                        <Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>2</Text>
+                    </LinearGradient>
+                    <Text style={[styles.label, { color: theme.colors.text, fontWeight: theme.fontWeight.bold }]}>
+                        Share This QR Code
+                    </Text>
+                </View>
+                <Text style={{ fontSize: theme.fontSize.xs, color: theme.colors.textSecondary, marginBottom: theme.spacing.md }}>
+                    The sender can scan this with their camera to get your address automatically
+                </Text>
                 <Card
                     variant="elevated"
                     style={{
                         padding: theme.spacing.xxl,
                         alignItems: 'center' as 'center',
-                        marginTop: theme.spacing.xl,
                         marginBottom: theme.spacing.lg,
                     }}
                 >
@@ -174,9 +273,29 @@ export const ReceiveScreen = () => {
                     </Text>
                 </Card>
 
-                {/* Address */}
-                <Text style={[styles.label, { color: theme.colors.text }]}>
-                    Your Address
+                {/* Step 3 - Address */}
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: theme.spacing.md, marginBottom: theme.spacing.md }}>
+                    <LinearGradient
+                        colors={[theme.colors.success, theme.colors.gradientMiddle]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={{
+                            width: 24,
+                            height: 24,
+                            borderRadius: 12,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: theme.spacing.sm,
+                        }}
+                    >
+                        <Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>3</Text>
+                    </LinearGradient>
+                    <Text style={[styles.label, { color: theme.colors.text, fontWeight: theme.fontWeight.bold }]}>
+                        Or Share This Address
+                    </Text>
+                </View>
+                <Text style={{ fontSize: theme.fontSize.xs, color: theme.colors.textSecondary, marginBottom: theme.spacing.sm }}>
+                    This is your unique {selectedWallet?.chainName} wallet address - like your email for crypto
                 </Text>
                 <Card
                     variant="outlined"

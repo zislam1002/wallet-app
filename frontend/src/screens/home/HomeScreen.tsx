@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
     View,
     Text,
@@ -7,7 +7,10 @@ import {
     SafeAreaView,
     TouchableOpacity,
     FlatList,
+    Animated,
+    Easing,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../theme/ThemeProvider';
 import { Button } from '../../components/Button';
@@ -24,6 +27,9 @@ export const HomeScreen = ({ navigation }: any) => {
     const { wallets, transactions, setWallets, setTransactions } = useWalletStore();
     const [loading, setLoading] = useState(true);
     const [totalBalance, setTotalBalance] = useState(0);
+    const [fabOpen, setFabOpen] = useState(false);
+    const [showBeginnerTip, setShowBeginnerTip] = useState(true);
+    const fabAnim = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
         loadData();
@@ -48,6 +54,17 @@ export const HomeScreen = ({ navigation }: any) => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const toggleFab = () => {
+        const toValue = fabOpen ? 0 : 1;
+        Animated.timing(fabAnim, {
+            toValue,
+            duration: 240,
+            easing: Easing.out(Easing.ease),
+            useNativeDriver: true,
+        }).start();
+        setFabOpen(!fabOpen);
     };
 
     const formatCurrency = (amount: number) => {
@@ -220,11 +237,11 @@ export const HomeScreen = ({ navigation }: any) => {
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Header */}
                 <View style={[styles.header, { padding: theme.spacing.lg }]}>
                     <View style={styles.headerTop}>
-                        <View>
+                        <View style={{ flex: 1 }}>
                             <Text
                                 style={[
                                     styles.greeting,
@@ -234,7 +251,7 @@ export const HomeScreen = ({ navigation }: any) => {
                                     },
                                 ]}
                             >
-                                Welcome back,
+                                👋 Welcome back,
                             </Text>
                             <Text
                                 style={[
@@ -265,221 +282,299 @@ export const HomeScreen = ({ navigation }: any) => {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={[styles.balanceContainer, { marginTop: theme.spacing.lg }]}>
+                    {/* Balance Card */}
+                    <LinearGradient
+                        colors={[theme.colors.gradientStart, theme.colors.gradientMiddle, theme.colors.gradientEnd]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={{
+                            marginTop: theme.spacing.lg,
+                            padding: theme.spacing.xl,
+                            borderRadius: theme.borderRadius.lg,
+                            shadowColor: theme.colors.primary,
+                            shadowOffset: { width: 0, height: 8 },
+                            shadowOpacity: 0.3,
+                            shadowRadius: 16,
+                            elevation: 12,
+                        }}
+                    >
                         <Text
-                            style={[
-                                styles.balanceLabel,
-                                {
-                                    fontSize: theme.fontSize.sm,
-                                    color: theme.colors.textSecondary,
-                                    marginBottom: theme.spacing.xs,
-                                },
-                            ]}
+                            style={{
+                                fontSize: theme.fontSize.sm,
+                                color: 'rgba(255,255,255,0.85)',
+                                fontWeight: '500',
+                                marginBottom: 4,
+                            }}
                         >
-                            Total Portfolio Value
+                            Total Balance
                         </Text>
                         <Text
-                            style={[
-                                styles.balanceAmount,
-                                {
-                                    fontSize: theme.fontSize.xxxl,
-                                    fontWeight: theme.fontWeight.bold,
-                                    color: theme.colors.text,
-                                },
-                            ]}
+                            style={{
+                                fontSize: 48,
+                                fontWeight: theme.fontWeight.bold,
+                                color: '#FFFFFF',
+                                letterSpacing: -1.5,
+                            }}
                         >
                             {formatCurrency(totalBalance)}
                         </Text>
+                    </LinearGradient>
+                </View>
+
+                {/* Beginner Tip Card */}
+                {showBeginnerTip && (
+                    <View style={{ padding: theme.spacing.lg, paddingTop: theme.spacing.md }}>
+                        <Card
+                            variant="elevated"
+                            style={{
+                                backgroundColor: `${theme.colors.primary}10`,
+                                borderLeftWidth: 4,
+                                borderLeftColor: theme.colors.primary,
+                            }}
+                        >
+                            <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                <View style={{ marginRight: theme.spacing.md }}>
+                                    <Text style={{ fontSize: 24 }}>💡</Text>
+                                </View>
+                                <View style={{ flex: 1 }}>
+                                    <Text
+                                        style={{
+                                            fontSize: theme.fontSize.md,
+                                            fontWeight: theme.fontWeight.semibold,
+                                            color: theme.colors.text,
+                                            marginBottom: theme.spacing.xs,
+                                        }}
+                                    >
+                                        New to crypto?
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            fontSize: theme.fontSize.sm,
+                                            color: theme.colors.textSecondary,
+                                            lineHeight: 20,
+                                            marginBottom: theme.spacing.sm,
+                                        }}
+                                    >
+                                        Start by receiving your first crypto. Tap "Receive" below to get your wallet address.
+                                    </Text>
+                                    <TouchableOpacity
+                                        onPress={() => setShowBeginnerTip(false)}
+                                        style={{ alignSelf: 'flex-start' }}
+                                    >
+                                        <Text
+                                            style={{
+                                                fontSize: theme.fontSize.sm,
+                                                color: theme.colors.primary,
+                                                fontWeight: theme.fontWeight.semibold,
+                                            }}
+                                        >
+                                            Got it!
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </Card>
+                    </View>
+                )}
+
+                {/* Quick Actions */}
+                <View style={{ padding: theme.spacing.lg, paddingTop: showBeginnerTip ? 0 : theme.spacing.md }}>
+                    <View style={{ flexDirection: 'row', gap: theme.spacing.md, marginBottom: theme.spacing.lg }}>
+                        <TouchableOpacity
+                            style={{ flex: 1 }}
+                            onPress={() => navigation.navigate('PaymentsTab', { screen: 'Send' })}
+                        >
+                            <Card variant="elevated" style={{ padding: theme.spacing.lg, alignItems: 'center' }}>
+                                <LinearGradient
+                                    colors={[theme.colors.gradientStart, theme.colors.gradientEnd]}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 1 }}
+                                    style={{
+                                        width: 56,
+                                        height: 56,
+                                        borderRadius: 28,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        marginBottom: theme.spacing.sm,
+                                    }}
+                                >
+                                    <Ionicons name="arrow-up" size={28} color="#fff" />
+                                </LinearGradient>
+                                <Text style={{ fontSize: theme.fontSize.md, fontWeight: theme.fontWeight.semibold, color: theme.colors.text }}>
+                                    Send
+                                </Text>
+                            </Card>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={{ flex: 1 }}
+                            onPress={() => navigation.navigate('PaymentsTab', { screen: 'Receive' })}
+                        >
+                            <Card variant="elevated" style={{ padding: theme.spacing.lg, alignItems: 'center' }}>
+                                <LinearGradient
+                                    colors={[theme.colors.success, theme.colors.gradientMiddle]}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 1 }}
+                                    style={{
+                                        width: 56,
+                                        height: 56,
+                                        borderRadius: 28,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        marginBottom: theme.spacing.sm,
+                                    }}
+                                >
+                                    <Ionicons name="arrow-down" size={28} color="#fff" />
+                                </LinearGradient>
+                                <Text style={{ fontSize: theme.fontSize.md, fontWeight: theme.fontWeight.semibold, color: theme.colors.text }}>
+                                    Receive
+                                </Text>
+                            </Card>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={{ flex: 1 }}
+                            onPress={() => navigation.navigate('DiscoverTab', { screen: 'Swap' })}
+                        >
+                            <Card variant="elevated" style={{ padding: theme.spacing.lg, alignItems: 'center' }}>
+                                <LinearGradient
+                                    colors={[theme.colors.secondary, theme.colors.gradientEnd]}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 1 }}
+                                    style={{
+                                        width: 56,
+                                        height: 56,
+                                        borderRadius: 28,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        marginBottom: theme.spacing.sm,
+                                    }}
+                                >
+                                    <Ionicons name="swap-horizontal" size={28} color="#fff" />
+                                </LinearGradient>
+                                <Text style={{ fontSize: theme.fontSize.md, fontWeight: theme.fontWeight.semibold, color: theme.colors.text }}>
+                                    Swap
+                                </Text>
+                            </Card>
+                        </TouchableOpacity>
                     </View>
                 </View>
 
-                {/* Wallet Cards */}
-                <View style={[styles.walletsSection, { paddingLeft: theme.spacing.lg }]}>
-                    <Text
-                        style={[
-                            styles.sectionTitle,
-                            {
+                {/* Your Wallets Section - Simplified */}
+                <View style={{ paddingHorizontal: theme.spacing.lg, paddingBottom: theme.spacing.md }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: theme.spacing.md }}>
+                        <Text
+                            style={{
                                 fontSize: theme.fontSize.lg,
-                                fontWeight: theme.fontWeight.semibold,
+                                fontWeight: theme.fontWeight.bold,
                                 color: theme.colors.text,
-                                marginBottom: theme.spacing.md,
-                            },
-                        ]}
-                    >
-                        Your Wallets
-                    </Text>
+                                flex: 1,
+                            }}
+                        >
+                            Your Crypto Wallets
+                        </Text>
+                        <View style={{
+                            backgroundColor: theme.colors.card,
+                            borderRadius: 12,
+                            paddingHorizontal: 8,
+                            paddingVertical: 4
+                        }}>
+                            <Text style={{ fontSize: 10, color: theme.colors.textSecondary, fontWeight: '600' }}>
+                                Different types of coins
+                            </Text>
+                        </View>
+                    </View>
                     <FlatList
                         data={wallets}
                         renderItem={renderWalletCard}
                         keyExtractor={(item) => item.id}
                         horizontal
                         showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ paddingRight: theme.spacing.lg }}
                     />
                 </View>
 
-                {/* Quick Actions */}
-                <View style={[styles.actionsSection, { padding: theme.spacing.lg }]}>
-                    <View style={styles.actionsRow}>
-                        <TouchableOpacity
-                            style={[
-                                styles.actionButton,
-                                {
-                                    backgroundColor: theme.colors.card,
-                                    borderRadius: theme.borderRadius.lg,
-                                    padding: theme.spacing.md,
-                                    flex: 1,
-                                    marginRight: theme.spacing.sm,
-                                },
-                            ]}
-                            onPress={() => navigation.navigate('PaymentsTab', { screen: 'Send' })}
-                        >
-                            <Text style={{ fontSize: 24, marginBottom: theme.spacing.xs }}>↑</Text>
-                            <Text
-                                style={[
-                                    styles.actionLabel,
-                                    {
-                                        fontSize: theme.fontSize.sm,
-                                        fontWeight: theme.fontWeight.semibold,
-                                        color: theme.colors.text,
-                                    },
-                                ]}
-                            >
-                                Send
-                            </Text>
-                        </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={[
-                                styles.actionButton,
-                                {
-                                    backgroundColor: theme.colors.card,
-                                    borderRadius: theme.borderRadius.lg,
-                                    padding: theme.spacing.md,
-                                    flex: 1,
-                                    marginRight: theme.spacing.sm,
-                                },
-                            ]}
-                            onPress={() => navigation.navigate('PaymentsTab', { screen: 'Receive' })}
-                        >
-                            <Text style={{ fontSize: 24, marginBottom: theme.spacing.xs }}>↓</Text>
-                            <Text
-                                style={[
-                                    styles.actionLabel,
-                                    {
-                                        fontSize: theme.fontSize.sm,
-                                        fontWeight: theme.fontWeight.semibold,
-                                        color: theme.colors.text,
-                                    },
-                                ]}
-                            >
-                                Receive
-                            </Text>
-                        </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={[
-                                styles.actionButton,
-                                {
-                                    backgroundColor: theme.colors.card,
-                                    borderRadius: theme.borderRadius.lg,
-                                    padding: theme.spacing.md,
-                                    flex: 1,
-                                    marginRight: theme.spacing.sm,
-                                },
-                            ]}
-                            onPress={() => navigation.navigate('DiscoverTab', { screen: 'Swap' })}
-                        >
-                            <Text style={{ fontSize: 24, marginBottom: theme.spacing.xs }}>⇄</Text>
-                            <Text
-                                style={[
-                                    styles.actionLabel,
-                                    {
-                                        fontSize: theme.fontSize.sm,
-                                        fontWeight: theme.fontWeight.semibold,
-                                        color: theme.colors.text,
-                                    },
-                                ]}
-                            >
-                                Swap
-                            </Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={[
-                                styles.actionButton,
-                                {
-                                    backgroundColor: theme.colors.card,
-                                    borderRadius: theme.borderRadius.lg,
-                                    padding: theme.spacing.md,
-                                    flex: 1,
-                                },
-                            ]}
-                            onPress={() => navigation.navigate('DiscoverTab', { screen: 'Bridge' })}
-                        >
-                            <Ionicons name="git-network" size={28} color={theme.colors.primary} style={{ marginBottom: theme.spacing.xs }} />
-                            <Text
-                                style={[
-                                    styles.actionLabel,
-                                    {
-                                        fontSize: theme.fontSize.sm,
-                                        fontWeight: theme.fontWeight.semibold,
-                                        color: theme.colors.text,
-                                    },
-                                ]}
-                            >
-                                Bridge
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-                {/* Recent Transactions */}
-                <View style={[styles.transactionsSection, { padding: theme.spacing.lg }]}>
+                {/* Recent Activity */}
+                <View style={[styles.transactionsSection, { padding: theme.spacing.lg, paddingTop: 0 }]}>
                     <View style={styles.sectionHeader}>
-                        <Text
-                            style={[
-                                styles.sectionTitle,
-                                {
+                        <View style={{ flex: 1 }}>
+                            <Text
+                                style={{
                                     fontSize: theme.fontSize.lg,
-                                    fontWeight: theme.fontWeight.semibold,
+                                    fontWeight: theme.fontWeight.bold,
                                     color: theme.colors.text,
-                                },
-                            ]}
-                        >
-                            Recent Transactions
-                        </Text>
+                                    marginBottom: 2,
+                                }}
+                            >
+                                Recent Activity
+                            </Text>
+                            <Text style={{ fontSize: theme.fontSize.xs, color: theme.colors.textSecondary }}>
+                                Your transaction history
+                            </Text>
+                        </View>
                         <TouchableOpacity>
                             <Text
-                                style={[
-                                    styles.seeAll,
-                                    {
-                                        fontSize: theme.fontSize.sm,
-                                        color: theme.colors.primary,
-                                        fontWeight: theme.fontWeight.semibold,
-                                    },
-                                ]}
+                                style={{
+                                    fontSize: theme.fontSize.sm,
+                                    color: theme.colors.primary,
+                                    fontWeight: theme.fontWeight.semibold,
+                                }}
                             >
-                                See All
+                                View All
                             </Text>
                         </TouchableOpacity>
                     </View>
 
                     {transactions.length === 0 ? (
-                        <View style={{ padding: theme.spacing.xl, alignItems: 'center' }}>
-                            <Text style={{ color: theme.colors.textSecondary }}>
-                                No transactions yet
+                        <Card variant="outlined" style={{ padding: theme.spacing.xl, alignItems: 'center', marginTop: theme.spacing.md }}>
+                            <Text style={{ fontSize: 40, marginBottom: theme.spacing.sm }}>📭</Text>
+                            <Text style={{ fontSize: theme.fontSize.md, fontWeight: theme.fontWeight.semibold, color: theme.colors.text, marginBottom: theme.spacing.xs }}>
+                                No Activity Yet
                             </Text>
-                        </View>
+                            <Text style={{ fontSize: theme.fontSize.sm, color: theme.colors.textSecondary, textAlign: 'center', lineHeight: 20 }}>
+                                Once you send or receive crypto, you'll see your transactions here
+                            </Text>
+                            <Button
+                                title="Get Started - Receive Crypto"
+                                onPress={() => navigation.navigate('PaymentsTab', { screen: 'Receive' })}
+                                variant="primary"
+                                size="small"
+                                style={{ marginTop: theme.spacing.md }}
+                            />
+                        </Card>
                     ) : (
-                        <FlatList
-                            data={transactions.slice(0, 10)}
-                            renderItem={renderTransaction}
-                            keyExtractor={(item) => item.id}
-                            scrollEnabled={false}
-                        />
+                        <View style={{ marginTop: theme.spacing.sm }}>
+                            <FlatList
+                                data={transactions.slice(0, 5)}
+                                renderItem={renderTransaction}
+                                keyExtractor={(item) => item.id}
+                                scrollEnabled={false}
+                            />
+                        </View>
                     )}
                 </View>
+
+                {/* Bottom Padding for FAB */}
+                <View style={{ height: 100 }} />
             </ScrollView>
+
+            {/* Help Button - Bottom Left */}
+            <TouchableOpacity
+                style={[
+                    styles.helpButton,
+                    {
+                        backgroundColor: theme.colors.card,
+                        borderWidth: 1,
+                        borderColor: theme.colors.border,
+                    },
+                ]}
+                onPress={() => navigation.navigate('Learn')}
+            >
+                <Ionicons name="help-circle" size={24} color={theme.colors.primary} />
+            </TouchableOpacity>
+
         </SafeAreaView>
     );
 };
@@ -487,6 +582,7 @@ export const HomeScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        position: 'relative',
     },
     loadingContainer: {
         flex: 1,
@@ -555,4 +651,20 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
     },
     transactionAmount: {},
+    /* Help Button */
+    helpButton: {
+        position: 'absolute',
+        left: 20,
+        bottom: 28,
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 4,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+    },
 });

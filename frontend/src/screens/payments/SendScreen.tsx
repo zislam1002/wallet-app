@@ -12,6 +12,7 @@ import {
     TouchableOpacity,
     Alert,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../theme/ThemeProvider';
@@ -31,6 +32,7 @@ export const SendScreen = () => {
     const [recipientAddress, setRecipientAddress] = useState('');
     const [amount, setAmount] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [showHelp, setShowHelp] = useState(true);
 
     const handleSend = async () => {
         if (!recipientAddress || !amount) {
@@ -82,10 +84,83 @@ export const SendScreen = () => {
                 contentContainerStyle={styles.scrollContent}
                 showsVerticalScrollIndicator={false}
             >
-                {/* Wallet Selection */}
-                <Text style={[styles.label, { color: theme.colors.text }]}>
-                    From Wallet
-                </Text>
+                {/* Explanation Card with Gradient */}
+                <LinearGradient
+                    colors={[`${theme.colors.gradientStart}15`, `${theme.colors.gradientEnd}15`]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={{
+                        padding: theme.spacing.lg,
+                        marginBottom: theme.spacing.lg,
+                        borderRadius: theme.borderRadius.lg,
+                        borderWidth: 1,
+                        borderColor: `${theme.colors.primary}30`,
+                    }}
+                >
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                        <LinearGradient
+                            colors={[theme.colors.gradientStart, theme.colors.gradientEnd]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 1 }}
+                            style={{
+                                width: 40,
+                                height: 40,
+                                borderRadius: 20,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginRight: theme.spacing.md,
+                            }}
+                        >
+                            <Text style={{ fontSize: 20 }}>💸</Text>
+                        </LinearGradient>
+                        <View style={{ flex: 1 }}>
+                            <Text
+                                style={{
+                                    fontSize: theme.fontSize.md,
+                                    fontWeight: theme.fontWeight.bold,
+                                    color: theme.colors.text,
+                                    marginBottom: theme.spacing.xs,
+                                }}
+                            >
+                                How to Send Crypto
+                            </Text>
+                            <Text
+                                style={{
+                                    fontSize: theme.fontSize.sm,
+                                    color: theme.colors.textSecondary,
+                                    lineHeight: 20,
+                                }}
+                            >
+                                1. Choose which wallet to send from{`\n`}
+                                2. Enter the recipient's wallet address{`\n`}
+                                3. Enter the amount you want to send{`\n`}
+                                4. Review and confirm the transaction
+                            </Text>
+                        </View>
+                    </View>
+                </LinearGradient>
+
+                {/* Step 1 */}
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: theme.spacing.sm }}>
+                    <LinearGradient
+                        colors={[theme.colors.gradientStart, theme.colors.gradientEnd]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={{
+                            width: 24,
+                            height: 24,
+                            borderRadius: 12,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: theme.spacing.sm,
+                        }}
+                    >
+                        <Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>1</Text>
+                    </LinearGradient>
+                    <Text style={[styles.label, { color: theme.colors.text, fontWeight: theme.fontWeight.bold }]}>
+                        Select Your Wallet
+                    </Text>
+                </View>
                 <Card
                     variant="elevated"
                     style={{
@@ -126,10 +201,27 @@ export const SendScreen = () => {
                     </View>
                 </Card>
 
-                {/* Token Selection */}
-                <Text style={[styles.label, { color: theme.colors.text }]}>
-                    Select Token
-                </Text>
+                {/* Step 2 - Token Selection */}
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: theme.spacing.sm }}>
+                    <LinearGradient
+                        colors={[theme.colors.gradientStart, theme.colors.gradientEnd]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={{
+                            width: 24,
+                            height: 24,
+                            borderRadius: 12,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: theme.spacing.sm,
+                        }}
+                    >
+                        <Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>2</Text>
+                    </LinearGradient>
+                    <Text style={[styles.label, { color: theme.colors.text, fontWeight: theme.fontWeight.bold }]}>
+                        Choose Which Coin to Send
+                    </Text>
+                </View>
                 <View style={styles.tokenGrid}>
                     {selectedWallet?.tokens.map((token) => (
                         <TouchableOpacity
@@ -175,14 +267,29 @@ export const SendScreen = () => {
                     ))}
                 </View>
 
-                {/* Recipient Address */}
-                <Text
-                    style={[
-                        styles.label,
-                        { color: theme.colors.text, marginTop: theme.spacing.lg },
-                    ]}
-                >
-                    Recipient Address
+                {/* Step 3 - Recipient Address */}
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: theme.spacing.xl, marginBottom: theme.spacing.sm }}>
+                    <LinearGradient
+                        colors={[theme.colors.gradientStart, theme.colors.gradientEnd]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={{
+                            width: 24,
+                            height: 24,
+                            borderRadius: 12,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: theme.spacing.sm,
+                        }}
+                    >
+                        <Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>3</Text>
+                    </LinearGradient>
+                    <Text style={[styles.label, { color: theme.colors.text, fontWeight: theme.fontWeight.bold }]}>
+                        Who Are You Sending To?
+                    </Text>
+                </View>
+                <Text style={{ fontSize: theme.fontSize.xs, color: theme.colors.textSecondary, marginBottom: theme.spacing.sm }}>
+                    Paste the recipient's wallet address or tap the QR icon to scan
                 </Text>
                 <Input
                     value={recipientAddress}
@@ -200,14 +307,29 @@ export const SendScreen = () => {
                     }
                 />
 
-                {/* Amount */}
-                <Text
-                    style={[
-                        styles.label,
-                        { color: theme.colors.text, marginTop: theme.spacing.lg },
-                    ]}
-                >
-                    Amount
+                {/* Step 4 - Amount */}
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: theme.spacing.xl, marginBottom: theme.spacing.sm }}>
+                    <LinearGradient
+                        colors={[theme.colors.gradientStart, theme.colors.gradientEnd]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={{
+                            width: 24,
+                            height: 24,
+                            borderRadius: 12,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: theme.spacing.sm,
+                        }}
+                    >
+                        <Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>4</Text>
+                    </LinearGradient>
+                    <Text style={[styles.label, { color: theme.colors.text, fontWeight: theme.fontWeight.bold }]}>
+                        How Much to Send?
+                    </Text>
+                </View>
+                <Text style={{ fontSize: theme.fontSize.xs, color: theme.colors.textSecondary, marginBottom: theme.spacing.sm }}>
+                    Enter the amount you want to send (or tap MAX for everything)
                 </Text>
                 <Input
                     value={amount}

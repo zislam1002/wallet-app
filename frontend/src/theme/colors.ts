@@ -1,29 +1,37 @@
 /**
  * Theme configuration for Lykos Wallet
- * iOS-inspired design with clean, minimal aesthetics
+ * Modern gradient-based design with vibrant colors
  */
 
 export const lightTheme = {
   colors: {
-    primary: "#007AFF",
-    secondary: "#5856D6",
-    success: "#34C759",
-    warning: "#FF9500",
-    error: "#FF3B30",
+    primary: "#6366F1",
+    primaryLight: "#818CF8",
+    primaryDark: "#4F46E5",
+    secondary: "#EC4899",
+    secondaryLight: "#F472B6",
+    success: "#10B981",
+    warning: "#F59E0B",
+    error: "#EF4444",
 
-    background: "#FFFFFF",
-    surface: "#F2F2F7",
+    background: "#F9FAFB",
+    surface: "#F3F4F6",
     card: "#FFFFFF",
 
-    text: "#000000",
-    textSecondary: "#8E8E93",
-    textTertiary: "#C7C7CC",
+    text: "#111827",
+    textSecondary: "#6B7280",
+    textTertiary: "#D1D5DB",
 
-    border: "#E5E5EA",
-    divider: "#E5E5EA",
+    border: "#E5E7EB",
+    divider: "#E5E7EB",
 
     overlay: "rgba(0, 0, 0, 0.5)",
     shadow: "rgba(0, 0, 0, 0.1)",
+
+    // Gradient colors
+    gradientStart: "#6366F1",
+    gradientMiddle: "#8B5CF6",
+    gradientEnd: "#EC4899",
   },
   spacing: {
     xs: 4,
@@ -59,25 +67,33 @@ export const lightTheme = {
 
 export const darkTheme = {
   colors: {
-    primary: "#0A84FF",
-    secondary: "#5E5CE6",
-    success: "#30D158",
-    warning: "#FF9F0A",
-    error: "#FF453A",
+    primary: "#818CF8",
+    primaryLight: "#A5B4FC",
+    primaryDark: "#6366F1",
+    secondary: "#F472B6",
+    secondaryLight: "#F9A8D4",
+    success: "#34D399",
+    warning: "#FBBF24",
+    error: "#F87171",
 
-    background: "#000000",
-    surface: "#1C1C1E",
-    card: "#2C2C2E",
+    background: "#0A0E1A",
+    surface: "#151B2E",
+    card: "#1E2538",
 
-    text: "#FFFFFF",
-    textSecondary: "#98989D",
-    textTertiary: "#48484A",
+    text: "#F8FAFC",
+    textSecondary: "#CBD5E1",
+    textTertiary: "#64748B",
 
-    border: "#38383A",
-    divider: "#38383A",
+    border: "#2D3748",
+    divider: "#2D3748",
 
     overlay: "rgba(0, 0, 0, 0.7)",
-    shadow: "rgba(0, 0, 0, 0.3)",
+    shadow: "rgba(0, 0, 0, 0.5)",
+
+    // Gradient colors - more vibrant for dark mode
+    gradientStart: "#818CF8",
+    gradientMiddle: "#A78BFA",
+    gradientEnd: "#F472B6",
   },
   spacing: lightTheme.spacing,
   borderRadius: lightTheme.borderRadius,
