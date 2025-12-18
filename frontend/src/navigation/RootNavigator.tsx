@@ -23,13 +23,13 @@ import { HomeScreen } from '../screens/home/HomeScreen';
 import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { RewardsScreen } from '../screens/profile/RewardsScreen';
 import { SettingsScreen } from '../screens/profile/SettingsScreen';
-import { SendScreen } from '../screens/payments/SendScreen';
-import { ReceiveScreen } from '../screens/payments/ReceiveScreen';
 import { PortfolioScreen } from '../screens/portfolio/PortfolioScreen';
-import { SwapScreen } from '../screens/swap/SwapScreen';
-import { BridgeScreen } from '../screens/bridge/BridgeScreen';
-import { SecurityCenterScreen } from '../screens/security/SecurityCenterScreen';
 import { LearnScreen } from '../screens/LearnScreen';
+import { DiscoverScreen } from '../screens/discover/DiscoverScreen';
+import { SendScreen } from '../screens/discover/SendScreen';
+import { ReceiveScreen } from '../screens/discover/ReceiveScreen';
+import { SwapScreen } from '../screens/discover/SwapScreen';
+import { TokenSearchScreen } from '../screens/discover/TokenSearchScreen';
 import { Text, View } from 'react-native';
 
 const Stack = createNativeStackNavigator();
@@ -42,8 +42,6 @@ const PlaceholderScreen = ({ name }: { name: string }) => (
     </View>
 );
 
-const AccountRecoveryScreen = () => <PlaceholderScreen name="Account Recovery" />;
-
 // Stack navigators for each tab
 const HomeStack = () => {
     return (
@@ -55,29 +53,14 @@ const HomeStack = () => {
     );
 };
 
-const PaymentsStack = () => {
-    return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Send" component={SendScreen} />
-            <Stack.Screen name="Receive" component={ReceiveScreen} />
-        </Stack.Navigator>
-    );
-};
-
 const DiscoverStack = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Discover" component={DiscoverScreen} />
+            <Stack.Screen name="TokenSearch" component={TokenSearchScreen} />
+            <Stack.Screen name="Send" component={SendScreen} />
+            <Stack.Screen name="Receive" component={ReceiveScreen} />
             <Stack.Screen name="Swap" component={SwapScreen} />
-            <Stack.Screen name="Bridge" component={BridgeScreen} />
-        </Stack.Navigator>
-    );
-};
-
-const SecurityStack = () => {
-    return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="SecurityCenter" component={SecurityCenterScreen} options={{ title: 'Security' }} />
-            <Stack.Screen name="AccountRecovery" component={AccountRecoveryScreen} options={{ title: 'Recovery' }} />
         </Stack.Navigator>
     );
 };
@@ -137,32 +120,12 @@ const MainTabs = () => {
                 }}
             />
             <Tab.Screen
-                name="PaymentsTab"
-                component={PaymentsStack}
-                options={{
-                    tabBarLabel: 'Payments',
-                    tabBarIcon: ({ color, size, focused }) => (
-                        <TabIcon name="card" color={color} size={size} focused={focused} />
-                    ),
-                }}
-            />
-            <Tab.Screen
                 name="DiscoverTab"
                 component={DiscoverStack}
                 options={{
                     tabBarLabel: 'Discover',
                     tabBarIcon: ({ color, size, focused }) => (
                         <TabIcon name="compass" color={color} size={size} focused={focused} />
-                    ),
-                }}
-            />
-            <Tab.Screen
-                name="SecurityTab"
-                component={SecurityStack}
-                options={{
-                    tabBarLabel: 'Security',
-                    tabBarIcon: ({ color, size, focused }) => (
-                        <TabIcon name="shield-checkmark" color={color} size={size} focused={focused} />
                     ),
                 }}
             />

@@ -169,13 +169,6 @@ export const ProfileScreen = () => {
                 contentContainerStyle={styles.scrollContent}
                 showsVerticalScrollIndicator={false}
             >
-                {/* Header */}
-                <View style={styles.header}>
-                    <Text style={[styles.title, { color: theme.colors.text }]}>
-                        Profile
-                    </Text>
-                </View>
-
                 {/* User Info Card */}
                 <Card
                     variant="elevated"

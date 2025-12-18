@@ -7,18 +7,32 @@ interface AuthState {
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  greeting: string;
 
   setUser: (user: User, token: string) => Promise<void>;
   logout: () => Promise<void>;
   updateUser: (updates: Partial<User>) => void;
   loadAuth: () => Promise<void>;
+  refreshGreeting: () => void;
 }
+
+const getRandomGreeting = () => {
+  const greetings = [
+    "Hi 👋",
+    "Welcome back 👋",
+    "Hey there 👋",
+    "Good to see you 👋",
+    "Hello 👋",
+  ];
+  return greetings[Math.floor(Math.random() * greetings.length)];
+};
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
   token: null,
   isAuthenticated: false,
   isLoading: true,
+  greeting: getRandomGreeting(),
 
   setUser: async (user: User, token: string) => {
     try {
@@ -64,5 +78,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       console.error("Error loading auth data:", error);
       set({ isLoading: false });
     }
+  },
+
+  refreshGreeting: () => {
+    set({ greeting: getRandomGreeting() });
   },
 }));
