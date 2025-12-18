@@ -212,7 +212,11 @@ export const ProfileScreen = () => {
                                     { color: theme.colors.text },
                                 ]}
                             >
-                                {user?.email?.split('@')[0]?.charAt(0).toUpperCase() + user?.email?.split('@')[0]?.slice(1).toLowerCase() || 'User'}
+                                {(() => {
+                                    const username = user?.email?.split('@')[0];
+                                    if (!username) return 'User';
+                                    return username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
+                                })()}
                             </Text>
                             <Text
                                 style={[
