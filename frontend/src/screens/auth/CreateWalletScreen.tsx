@@ -52,7 +52,21 @@ export const CreateWalletScreen: React.FC<CreateWalletScreenProps> = ({ navigati
             {/* Back Button */}
             <View style={styles.header}>
                 <TouchableOpacity
-                    style={styles.backButton}
+                    style={[styles.backButton, {
+                        width: 40,
+                        height: 40,
+                        borderRadius: 20,
+                        backgroundColor: `${theme.colors.card}CC`,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 1,
+                        borderColor: 'rgba(255, 255, 255, 0.2)',
+                        shadowColor: theme.colors.shadow,
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.1,
+                        shadowRadius: 8,
+                        elevation: 3,
+                    }]}
                     onPress={() => navigation.goBack()}
                 >
                     <Ionicons name="arrow-back" size={24} color={theme.colors.text} />

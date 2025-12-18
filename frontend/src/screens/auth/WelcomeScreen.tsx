@@ -7,6 +7,7 @@ import {
     SafeAreaView,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from '../../theme/ThemeProvider';
 import { Button } from '../../components/Button';
@@ -32,7 +33,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
                     {/* Hero Section with Gradient */}
                     <View style={[styles.header, { marginTop: theme.spacing.xl }]}>
                         <LinearGradient
-                            colors={[theme.colors.gradientStart, theme.colors.gradientMiddle, theme.colors.gradientEnd]}
+                            colors={[`${theme.colors.gradientStart}E6`, `${theme.colors.gradientMiddle}E6`, `${theme.colors.gradientEnd}E6`]}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 1 }}
                             style={[
@@ -40,6 +41,13 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
                                 {
                                     borderRadius: 28,
                                     marginBottom: theme.spacing.lg,
+                                    borderWidth: 2,
+                                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                                    shadowColor: theme.colors.primary,
+                                    shadowOffset: { width: 0, height: 8 },
+                                    shadowOpacity: 0.3,
+                                    shadowRadius: 16,
+                                    elevation: 10,
                                 },
                             ]}
                         >
@@ -88,10 +96,13 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
                     <View style={[styles.features, { marginBottom: theme.spacing.lg }]}>
                         <View style={{ flexDirection: 'row', marginBottom: theme.spacing.md }}>
                             <LinearGradient
-                                colors={[theme.colors.primary, theme.colors.primaryDark]}
+                                colors={[`${theme.colors.primary}E6`, `${theme.colors.primaryDark}E6`]}
                                 start={{ x: 0, y: 0 }}
                                 end={{ x: 1, y: 1 }}
-                                style={styles.featureIconGradient}
+                                style={[styles.featureIconGradient, {
+                                    borderWidth: 1.5,
+                                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                                }]}
                             >
                                 <Text style={{ fontSize: 24, color: '#fff' }}>🔒</Text>
                             </LinearGradient>
@@ -120,10 +131,13 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
 
                         <View style={{ flexDirection: 'row', marginBottom: theme.spacing.md }}>
                             <LinearGradient
-                                colors={[theme.colors.success, '#059669']}
+                                colors={[`${theme.colors.success}E6`, '#059669E6']}
                                 start={{ x: 0, y: 0 }}
                                 end={{ x: 1, y: 1 }}
-                                style={styles.featureIconGradient}
+                                style={[styles.featureIconGradient, {
+                                    borderWidth: 1.5,
+                                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                                }]}
                             >
                                 <Text style={{ fontSize: 24, color: '#fff' }}>⚡</Text>
                             </LinearGradient>
@@ -152,10 +166,13 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
 
                         <View style={{ flexDirection: 'row', marginBottom: theme.spacing.md }}>
                             <LinearGradient
-                                colors={[theme.colors.secondary, '#BE185D']}
+                                colors={[`${theme.colors.secondary}E6`, '#BE185DE6']}
                                 start={{ x: 0, y: 0 }}
                                 end={{ x: 1, y: 1 }}
-                                style={styles.featureIconGradient}
+                                style={[styles.featureIconGradient, {
+                                    borderWidth: 1.5,
+                                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                                }]}
                             >
                                 <Text style={{ fontSize: 24, color: '#fff' }}>🌍</Text>
                             </LinearGradient>
@@ -216,9 +233,17 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
                             onPress={() => handleSocialLogin('google')}
                             variant="outline"
                             fullWidth
+                            icon={<Ionicons name="logo-google" size={20} color={theme.colors.text} />}
                             style={{
                                 marginBottom: theme.spacing.sm,
-                                borderColor: theme.colors.border,
+                                backgroundColor: `${theme.colors.card}CC`,
+                                borderWidth: 1,
+                                borderColor: 'rgba(255, 255, 255, 0.2)',
+                                shadowColor: theme.colors.shadow,
+                                shadowOffset: { width: 0, height: 4 },
+                                shadowOpacity: 0.1,
+                                shadowRadius: 10,
+                                elevation: 3,
                             }}
                         />
                         <Button
@@ -226,9 +251,17 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
                             onPress={() => handleSocialLogin('apple')}
                             variant="outline"
                             fullWidth
+                            icon={<Ionicons name="logo-apple" size={20} color={theme.colors.text} />}
                             style={{
                                 marginBottom: theme.spacing.md,
-                                borderColor: theme.colors.border,
+                                backgroundColor: `${theme.colors.card}CC`,
+                                borderWidth: 1,
+                                borderColor: 'rgba(255, 255, 255, 0.2)',
+                                shadowColor: theme.colors.shadow,
+                                shadowOffset: { width: 0, height: 4 },
+                                shadowOpacity: 0.1,
+                                shadowRadius: 10,
+                                elevation: 3,
                             }}
                         />
                     </View>

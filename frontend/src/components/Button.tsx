@@ -18,6 +18,7 @@ interface ButtonProps {
     disabled?: boolean;
     loading?: boolean;
     fullWidth?: boolean;
+    icon?: React.ReactNode;
     style?: ViewStyle;
     textStyle?: TextStyle;
 }
@@ -30,6 +31,7 @@ export const Button: React.FC<ButtonProps> = ({
     disabled = false,
     loading = false,
     fullWidth = false,
+    icon,
     style,
     textStyle,
 }) => {
@@ -123,19 +125,22 @@ export const Button: React.FC<ButtonProps> = ({
                 {loading ? (
                     <ActivityIndicator color={getTextColor()} />
                 ) : (
-                    <Text
-                        style={[
-                            styles.text,
-                            {
-                                color: getTextColor(),
-                                fontSize: getFontSize(),
-                                fontWeight: theme.fontWeight.semibold,
-                            },
-                            textStyle,
-                        ]}
-                    >
-                        {title}
-                    </Text>
+                    <Animated.View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: theme.spacing.sm }}>
+                        {icon}
+                        <Text
+                            style={[
+                                styles.text,
+                                {
+                                    color: getTextColor(),
+                                    fontSize: getFontSize(),
+                                    fontWeight: theme.fontWeight.semibold,
+                                },
+                                textStyle,
+                            ]}
+                        >
+                            {title}
+                        </Text>
+                    </Animated.View>
                 )}
             </Animated.View>
         </Pressable>

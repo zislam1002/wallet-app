@@ -13,6 +13,7 @@ import {
     TextInput,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../theme/ThemeProvider';
 import { Card } from '../../components/Card';
@@ -96,13 +97,20 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
                                 width: 48,
                                 height: 48,
                                 borderRadius: theme.borderRadius.full,
-                                backgroundColor: theme.colors.primary,
+                                backgroundColor: 'rgba(99, 102, 241, 0.15)',
                                 justifyContent: 'center',
                                 alignItems: 'center',
+                                borderWidth: 1.5,
+                                borderColor: 'rgba(99, 102, 241, 0.3)',
+                                shadowColor: theme.colors.primary,
+                                shadowOffset: { width: 0, height: 4 },
+                                shadowOpacity: 0.2,
+                                shadowRadius: 8,
+                                elevation: 4,
                             }}
                             onPress={() => navigation.navigate('ProfileTab')}
                         >
-                            <Text style={{ color: '#FFFFFF', fontSize: theme.fontSize.lg }}>
+                            <Text style={{ color: theme.colors.primary, fontSize: theme.fontSize.lg, fontWeight: theme.fontWeight.bold }}>
                                 {user?.name?.[0] || 'U'}
                             </Text>
                         </TouchableOpacity>
@@ -110,7 +118,7 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
 
                     {/* Balance Card - Gradient */}
                     <LinearGradient
-                        colors={[theme.colors.gradientStart, theme.colors.gradientMiddle, theme.colors.gradientEnd]}
+                        colors={[`${theme.colors.gradientStart}F2`, `${theme.colors.gradientMiddle}F2`, `${theme.colors.gradientEnd}F2`]}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 1 }}
                         style={{
@@ -118,10 +126,13 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
                             borderRadius: theme.borderRadius.lg,
                             marginBottom: theme.spacing.lg,
                             shadowColor: theme.colors.primary,
-                            shadowOffset: { width: 0, height: 8 },
-                            shadowOpacity: 0.3,
-                            shadowRadius: 16,
+                            shadowOffset: { width: 0, height: 12 },
+                            shadowOpacity: 0.35,
+                            shadowRadius: 20,
                             elevation: 12,
+                            borderWidth: 1,
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            overflow: 'hidden',
                         }}
                     >
                         <Text
@@ -164,10 +175,17 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
                                     width: 40,
                                     height: 40,
                                     borderRadius: 20,
-                                    backgroundColor: `${theme.colors.primary}15`,
+                                    backgroundColor: 'rgba(99, 102, 241, 0.15)',
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     marginRight: theme.spacing.sm,
+                                    borderWidth: 1,
+                                    borderColor: 'rgba(99, 102, 241, 0.3)',
+                                    shadowColor: theme.colors.primary,
+                                    shadowOffset: { width: 0, height: 2 },
+                                    shadowOpacity: 0.15,
+                                    shadowRadius: 6,
+                                    elevation: 2,
                                 }}>
                                     <Ionicons name="wallet-outline" size={22} color={theme.colors.primary} />
                                 </View>
@@ -191,9 +209,11 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
                                         alignItems: 'center',
                                         paddingVertical: theme.spacing.sm,
                                         paddingHorizontal: theme.spacing.md,
-                                        backgroundColor: theme.colors.surface,
+                                        backgroundColor: `${theme.colors.surface}CC`,
                                         borderRadius: theme.borderRadius.md,
                                         marginBottom: index < mockWallets.length - 1 ? theme.spacing.xs : 0,
+                                        borderWidth: 0.5,
+                                        borderColor: 'rgba(255, 255, 255, 0.15)',
                                     }}
                                 >
                                     <View style={{ flex: 1 }}>
@@ -234,13 +254,18 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
                     <View ref={searchBarRef} style={{ marginBottom: theme.spacing.md }}>
                         <View
                             style={{
-                                backgroundColor: theme.colors.card,
+                                backgroundColor: `${theme.colors.card}E6`,
                                 borderRadius: theme.borderRadius.md,
                                 padding: theme.spacing.md,
                                 borderWidth: 1,
-                                borderColor: searchQuery.length > 0 ? theme.colors.primary : theme.colors.border,
+                                borderColor: searchQuery.length > 0 ? `${theme.colors.primary}80` : 'rgba(255, 255, 255, 0.2)',
                                 flexDirection: 'row',
                                 alignItems: 'center',
+                                shadowColor: theme.colors.shadow,
+                                shadowOffset: { width: 0, height: 4 },
+                                shadowOpacity: 0.1,
+                                shadowRadius: 8,
+                                elevation: 2,
                             }}
                         >
                             <Ionicons name="search" size={20} color={theme.colors.textSecondary} style={{ marginRight: theme.spacing.sm }} />
@@ -272,18 +297,28 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
 
                         {/* Dropdown Results */}
                         {isSearchFocused && (
-                            <Card
-                                variant="elevated"
+                            <View
                                 style={{
                                     marginTop: theme.spacing.xs,
                                     maxHeight: 300,
+                                    backgroundColor: `${theme.colors.card}E6`,
+                                    borderRadius: theme.borderRadius.lg,
+                                    borderWidth: 0.5,
+                                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                                    shadowColor: theme.colors.shadow,
+                                    shadowOffset: { width: 0, height: 4 },
+                                    shadowOpacity: 0.15,
+                                    shadowRadius: 12,
+                                    elevation: 8,
+                                    overflow: 'hidden',
                                 }}
                             >
-                                <ScrollView>
+                                <ScrollView showsVerticalScrollIndicator={false}>
                                     {tokenTypes.map((type, index) => (
                                         <TouchableOpacity
                                             key={type.id}
                                             onPress={() => {
+                                                setIsSearchFocused(false);
                                                 setSearchQuery('');
                                                 navigation.navigate('TokenSearch', { type: type.name });
                                             }}
@@ -337,7 +372,7 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
                                         </TouchableOpacity>
                                     ))}
                                 </ScrollView>
-                            </Card>
+                            </View>
                         )}
                     </View>
 
@@ -350,7 +385,7 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
                             onPress={() => navigation.navigate('Send')}
                         >
                             <LinearGradient
-                                colors={[theme.colors.gradientStart, theme.colors.gradientEnd]}
+                                colors={[`${theme.colors.gradientStart}E6`, `${theme.colors.gradientEnd}E6`]}
                                 start={{ x: 0, y: 0 }}
                                 end={{ x: 1, y: 1 }}
                                 style={{
@@ -360,10 +395,12 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     marginBottom: theme.spacing.sm,
+                                    borderWidth: 1,
+                                    borderColor: 'rgba(255, 255, 255, 0.3)',
                                     shadowColor: theme.colors.primary,
-                                    shadowOffset: { width: 0, height: 4 },
-                                    shadowOpacity: 0.3,
-                                    shadowRadius: 8,
+                                    shadowOffset: { width: 0, height: 6 },
+                                    shadowOpacity: 0.35,
+                                    shadowRadius: 12,
                                     elevation: 8,
                                 }}
                             >
@@ -385,7 +422,7 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
                             onPress={() => navigation.navigate('Receive')}
                         >
                             <LinearGradient
-                                colors={[theme.colors.gradientStart, theme.colors.gradientEnd]}
+                                colors={[`${theme.colors.gradientStart}E6`, `${theme.colors.gradientEnd}E6`]}
                                 start={{ x: 0, y: 0 }}
                                 end={{ x: 1, y: 1 }}
                                 style={{
@@ -395,10 +432,12 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     marginBottom: theme.spacing.sm,
+                                    borderWidth: 1,
+                                    borderColor: 'rgba(255, 255, 255, 0.3)',
                                     shadowColor: theme.colors.primary,
-                                    shadowOffset: { width: 0, height: 4 },
-                                    shadowOpacity: 0.3,
-                                    shadowRadius: 8,
+                                    shadowOffset: { width: 0, height: 6 },
+                                    shadowOpacity: 0.35,
+                                    shadowRadius: 12,
                                     elevation: 8,
                                 }}
                             >
@@ -420,7 +459,7 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
                             onPress={() => navigation.navigate('Swap')}
                         >
                             <LinearGradient
-                                colors={[theme.colors.secondary, theme.colors.gradientEnd]}
+                                colors={[`${theme.colors.secondary}E6`, `${theme.colors.gradientEnd}E6`]}
                                 start={{ x: 0, y: 0 }}
                                 end={{ x: 1, y: 1 }}
                                 style={{
@@ -430,10 +469,12 @@ export const DiscoverScreen = ({ navigation, route }: any) => {
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     marginBottom: theme.spacing.sm,
+                                    borderWidth: 1,
+                                    borderColor: 'rgba(255, 255, 255, 0.3)',
                                     shadowColor: theme.colors.secondary,
-                                    shadowOffset: { width: 0, height: 4 },
-                                    shadowOpacity: 0.3,
-                                    shadowRadius: 8,
+                                    shadowOffset: { width: 0, height: 6 },
+                                    shadowOpacity: 0.35,
+                                    shadowRadius: 12,
                                     elevation: 8,
                                 }}
                             >

@@ -11,6 +11,7 @@ import {
     Easing,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../theme/ThemeProvider';
@@ -244,13 +245,21 @@ export const HomeScreen = ({ navigation }: any) => {
     return (
         <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             <LinearGradient
-                colors={[theme.colors.gradientStart, theme.colors.gradientMiddle, theme.colors.gradientEnd]}
+                colors={[`${theme.colors.gradientStart}F2`, `${theme.colors.gradientMiddle}F2`, `${theme.colors.gradientEnd}F2`]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={{
                     paddingTop: 60,
                     borderBottomLeftRadius: 32,
                     borderBottomRightRadius: 32,
+                    borderWidth: 1,
+                    borderTopWidth: 0,
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    shadowColor: theme.colors.primary,
+                    shadowOffset: { width: 0, height: 8 },
+                    shadowOpacity: 0.3,
+                    shadowRadius: 16,
+                    elevation: 8,
                 }}
             >
                 <View style={{ padding: theme.spacing.xl, paddingTop: 0 }}>
@@ -282,11 +291,16 @@ export const HomeScreen = ({ navigation }: any) => {
                                 width: 56,
                                 height: 56,
                                 borderRadius: 28,
-                                backgroundColor: 'rgba(255,255,255,0.25)',
+                                backgroundColor: 'rgba(255,255,255,0.15)',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                borderWidth: 2,
-                                borderColor: 'rgba(255,255,255,0.4)',
+                                borderWidth: 1.5,
+                                borderColor: 'rgba(255,255,255,0.3)',
+                                shadowColor: '#000',
+                                shadowOffset: { width: 0, height: 4 },
+                                shadowOpacity: 0.2,
+                                shadowRadius: 8,
+                                elevation: 4,
                             }}
                             onPress={() => navigation.navigate('ProfileTab')}
                         >
@@ -311,12 +325,18 @@ export const HomeScreen = ({ navigation }: any) => {
                     <TouchableOpacity
                         style={{
                             flex: 1,
-                            borderWidth: 2,
-                            borderColor: theme.colors.border,
+                            borderWidth: 1,
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
                             borderRadius: theme.borderRadius.lg,
                             justifyContent: 'center',
                             alignItems: 'center',
                             paddingVertical: theme.spacing.xl * 2,
+                            backgroundColor: `${theme.colors.card}99`,
+                            shadowColor: theme.colors.shadow,
+                            shadowOffset: { width: 0, height: 4 },
+                            shadowOpacity: 0.1,
+                            shadowRadius: 12,
+                            elevation: 3,
                         }}
                         onPress={() => navigation.navigate('DiscoverTab', { screen: 'Discover', params: { focusSearch: true } })}
                     >
@@ -351,12 +371,18 @@ export const HomeScreen = ({ navigation }: any) => {
                     <TouchableOpacity
                         style={{
                             flex: 1,
-                            borderWidth: 2,
-                            borderColor: theme.colors.border,
+                            borderWidth: 1,
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
                             borderRadius: theme.borderRadius.lg,
                             justifyContent: 'center',
                             alignItems: 'center',
                             paddingVertical: theme.spacing.xl * 2,
+                            backgroundColor: `${theme.colors.card}99`,
+                            shadowColor: theme.colors.shadow,
+                            shadowOffset: { width: 0, height: 4 },
+                            shadowOpacity: 0.1,
+                            shadowRadius: 12,
+                            elevation: 3,
                         }}
                         onPress={() => navigation.navigate('DiscoverTab', { screen: 'Discover', params: { focusSearch: true } })}
                     >

@@ -68,7 +68,21 @@ export const SignInScreen: React.FC<SignInScreenProps> = ({ navigation, route })
             {/* Back Button */}
             <View style={styles.header}>
                 <TouchableOpacity
-                    style={styles.backButton}
+                    style={[styles.backButton, {
+                        width: 40,
+                        height: 40,
+                        borderRadius: 20,
+                        backgroundColor: `${theme.colors.card}CC`,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 1,
+                        borderColor: 'rgba(255, 255, 255, 0.2)',
+                        shadowColor: theme.colors.shadow,
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.1,
+                        shadowRadius: 8,
+                        elevation: 3,
+                    }]}
                     onPress={() => navigation.goBack()}
                 >
                     <Ionicons name="arrow-back" size={24} color={theme.colors.text} />
@@ -161,7 +175,18 @@ export const SignInScreen: React.FC<SignInScreenProps> = ({ navigation, route })
                         onPress={() => handleSocialLogin('google')}
                         variant="outline"
                         fullWidth
-                        style={{ marginBottom: theme.spacing.md }}
+                        icon={<Ionicons name="logo-google" size={20} color={theme.colors.text} />}
+                        style={{
+                            marginBottom: theme.spacing.md,
+                            backgroundColor: `${theme.colors.card}CC`,
+                            borderWidth: 1,
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            shadowColor: theme.colors.shadow,
+                            shadowOffset: { width: 0, height: 4 },
+                            shadowOpacity: 0.1,
+                            shadowRadius: 10,
+                            elevation: 3,
+                        }}
                         disabled={loading}
                     />
 
@@ -170,7 +195,18 @@ export const SignInScreen: React.FC<SignInScreenProps> = ({ navigation, route })
                         onPress={() => handleSocialLogin('apple')}
                         variant="outline"
                         fullWidth
-                        style={{ marginBottom: theme.spacing.xl }}
+                        icon={<Ionicons name="logo-apple" size={20} color={theme.colors.text} />}
+                        style={{
+                            marginBottom: theme.spacing.xl,
+                            backgroundColor: `${theme.colors.card}CC`,
+                            borderWidth: 1,
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            shadowColor: theme.colors.shadow,
+                            shadowOffset: { width: 0, height: 4 },
+                            shadowOpacity: 0.1,
+                            shadowRadius: 10,
+                            elevation: 3,
+                        }}
                         disabled={loading}
                     />
 

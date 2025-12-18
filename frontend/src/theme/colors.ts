@@ -14,19 +14,19 @@ export const lightTheme = {
     warning: "#F59E0B",
     error: "#EF4444",
 
-    background: "#F9FAFB",
-    surface: "#F3F4F6",
-    card: "#FFFFFF",
+    background: "#F5F7FA",
+    surface: "rgba(243, 244, 246, 0.6)",
+    card: "rgba(255, 255, 255, 0.7)",
 
     text: "#111827",
     textSecondary: "#6B7280",
     textTertiary: "#D1D5DB",
 
-    border: "#E5E7EB",
-    divider: "#E5E7EB",
+    border: "rgba(229, 231, 235, 0.3)",
+    divider: "rgba(229, 231, 235, 0.3)",
 
     overlay: "rgba(0, 0, 0, 0.5)",
-    shadow: "rgba(0, 0, 0, 0.1)",
+    shadow: "rgba(99, 102, 241, 0.15)",
 
     // Gradient colors
     gradientStart: "#6366F1",
@@ -77,18 +77,18 @@ export const darkTheme = {
     error: "#F87171",
 
     background: "#0A0E1A",
-    surface: "#151B2E",
-    card: "#1E2538",
+    surface: "rgba(21, 27, 46, 0.6)",
+    card: "rgba(30, 37, 56, 0.7)",
 
     text: "#F8FAFC",
     textSecondary: "#CBD5E1",
     textTertiary: "#64748B",
 
-    border: "#2D3748",
-    divider: "#2D3748",
+    border: "rgba(45, 55, 72, 0.3)",
+    divider: "rgba(45, 55, 72, 0.3)",
 
     overlay: "rgba(0, 0, 0, 0.7)",
-    shadow: "rgba(0, 0, 0, 0.5)",
+    shadow: "rgba(129, 140, 248, 0.2)",
 
     // Gradient colors - more vibrant for dark mode
     gradientStart: "#818CF8",

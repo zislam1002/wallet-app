@@ -49,16 +49,21 @@ export const Input: React.FC<InputProps> = ({
                 style={[
                     styles.inputContainer,
                     {
-                        backgroundColor: theme.colors.surface,
+                        backgroundColor: `${theme.colors.surface}E6`,
                         borderRadius: theme.borderRadius.md,
                         borderWidth: 1,
                         borderColor: error
                             ? theme.colors.error
                             : isFocused
-                                ? theme.colors.primary
-                                : theme.colors.border,
+                                ? 'rgba(99, 102, 241, 0.5)'
+                                : 'rgba(255, 255, 255, 0.2)',
                         paddingHorizontal: theme.spacing.md,
                         paddingVertical: theme.spacing.sm,
+                        shadowColor: theme.colors.shadow,
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.1,
+                        shadowRadius: 8,
+                        elevation: 2,
                     },
                 ]}
             >

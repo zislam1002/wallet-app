@@ -41,14 +41,19 @@ export const TokenSearchScreen = ({ navigation, route }: any) => {
                 {/* Search Bar */}
                 <View
                     style={{
-                        backgroundColor: theme.colors.card,
+                        backgroundColor: `${theme.colors.card}E6`,
                         borderRadius: theme.borderRadius.lg,
                         padding: theme.spacing.md,
-                        borderWidth: 2,
-                        borderColor: searchQuery.length > 0 ? theme.colors.primary : theme.colors.border,
+                        borderWidth: 1.5,
+                        borderColor: searchQuery.length > 0 ? 'rgba(99, 102, 241, 0.5)' : 'rgba(255, 255, 255, 0.3)',
                         flexDirection: 'row',
                         alignItems: 'center',
                         marginBottom: theme.spacing.md,
+                        shadowColor: theme.colors.shadow,
+                        shadowOffset: { width: 0, height: 4 },
+                        shadowOpacity: 0.15,
+                        shadowRadius: 10,
+                        elevation: 3,
                     }}
                 >
                     <Ionicons name="search" size={20} color={theme.colors.textSecondary} style={{ marginRight: theme.spacing.sm }} />
@@ -74,12 +79,17 @@ export const TokenSearchScreen = ({ navigation, route }: any) => {
                 {/* Category Pill */}
                 <View style={{ flexDirection: 'row', marginBottom: theme.spacing.lg }}>
                     <View style={{
-                        backgroundColor: theme.colors.surface,
+                        backgroundColor: 'rgba(99, 102, 241, 0.12)',
                         paddingHorizontal: theme.spacing.lg,
                         paddingVertical: theme.spacing.sm,
                         borderRadius: theme.borderRadius.full,
                         borderWidth: 1,
-                        borderColor: theme.colors.border,
+                        borderColor: 'rgba(99, 102, 241, 0.3)',
+                        shadowColor: theme.colors.primary,
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.1,
+                        shadowRadius: 6,
+                        elevation: 2,
                     }}>
                         <Text style={{
                             fontSize: theme.fontSize.md,
@@ -104,10 +114,17 @@ export const TokenSearchScreen = ({ navigation, route }: any) => {
                                 width: 80,
                                 height: 80,
                                 borderRadius: 40,
-                                backgroundColor: `${theme.colors.primary}20`,
+                                backgroundColor: 'rgba(99, 102, 241, 0.15)',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 marginBottom: theme.spacing.lg,
+                                borderWidth: 1.5,
+                                borderColor: 'rgba(99, 102, 241, 0.3)',
+                                shadowColor: theme.colors.primary,
+                                shadowOffset: { width: 0, height: 4 },
+                                shadowOpacity: 0.2,
+                                shadowRadius: 8,
+                                elevation: 4,
                             }}>
                                 <Ionicons name="information-circle" size={40} color={theme.colors.primary} />
                             </View>

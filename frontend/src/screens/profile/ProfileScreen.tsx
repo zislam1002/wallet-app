@@ -123,8 +123,17 @@ export const ProfileScreen = () => {
                         styles.iconContainer,
                         {
                             backgroundColor: color
-                                ? `${color}20`
-                                : theme.colors.primary + '20',
+                                ? `${color}15`
+                                : 'rgba(99, 102, 241, 0.15)',
+                            borderWidth: 1,
+                            borderColor: color
+                                ? `${color}30`
+                                : 'rgba(99, 102, 241, 0.3)',
+                            shadowColor: color || theme.colors.primary,
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.15,
+                            shadowRadius: 6,
+                            elevation: 2,
                         },
                     ]}
                 >
@@ -179,10 +188,18 @@ export const ProfileScreen = () => {
                 >
                     <View style={styles.userInfo}>
                         <LinearGradient
-                            colors={[theme.colors.gradientStart, theme.colors.gradientMiddle, theme.colors.gradientEnd]}
+                            colors={[`${theme.colors.gradientStart}E6`, `${theme.colors.gradientMiddle}E6`, `${theme.colors.gradientEnd}E6`]}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 1 }}
-                            style={styles.avatar}
+                            style={[styles.avatar, {
+                                borderWidth: 2,
+                                borderColor: 'rgba(255, 255, 255, 0.3)',
+                                shadowColor: theme.colors.primary,
+                                shadowOffset: { width: 0, height: 4 },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 10,
+                                elevation: 6,
+                            }]}
                         >
                             <Text style={styles.avatarText}>
                                 {user?.email?.charAt(0).toUpperCase() || 'U'}
@@ -195,7 +212,7 @@ export const ProfileScreen = () => {
                                     { color: theme.colors.text },
                                 ]}
                             >
-                                {user?.email?.split('@')[0] || 'User'}
+                                {user?.email?.split('@')[0]?.charAt(0).toUpperCase() + user?.email?.split('@')[0]?.slice(1).toLowerCase() || 'User'}
                             </Text>
                             <Text
                                 style={[

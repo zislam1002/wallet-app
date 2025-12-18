@@ -37,24 +37,68 @@ export const SendScreen = ({ navigation }: any) => {
     };
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { borderBottomColor: theme.colors.border, padding: theme.spacing.lg }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color={theme.colors.text} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: theme.colors.text, fontSize: theme.fontSize.xl, fontWeight: theme.fontWeight.bold }]}>
-                    Send
-                </Text>
-                <View style={{ width: 24 }} />
-            </View>
+        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+            <LinearGradient
+                colors={[theme.colors.gradientStart, theme.colors.gradientMiddle, theme.colors.gradientEnd]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={{
+                    paddingTop: 60,
+                    paddingHorizontal: theme.spacing.lg,
+                    paddingBottom: theme.spacing.xl,
+                    borderBottomLeftRadius: 32,
+                    borderBottomRightRadius: 32,
+                    borderWidth: 1,
+                    borderTopWidth: 0,
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    shadowColor: theme.colors.primary,
+                    shadowOffset: { width: 0, height: 8 },
+                    shadowOpacity: 0.3,
+                    shadowRadius: 16,
+                    elevation: 8,
+                }}
+            >
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <TouchableOpacity
+                        onPress={() => navigation.goBack()}
+                        style={{
+                            width: 40,
+                            height: 40,
+                            borderRadius: 20,
+                            backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderWidth: 1.5,
+                            borderColor: 'rgba(255, 255, 255, 0.3)',
+                        }}
+                    >
+                        <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+                    </TouchableOpacity>
+                    <Text style={{ color: '#FFFFFF', fontSize: theme.fontSize.xxl, fontWeight: theme.fontWeight.bold }}>
+                        Send
+                    </Text>
+                    <View style={{ width: 40 }} />
+                </View>
+            </LinearGradient>
 
             <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: theme.spacing.lg }}>
                 {/* Recipient Address */}
                 <Text style={{ fontSize: theme.fontSize.md, fontWeight: theme.fontWeight.semibold, color: theme.colors.text, marginBottom: theme.spacing.sm }}>
                     Recipient Address
                 </Text>
-                <Card variant="outlined" style={{ marginBottom: theme.spacing.lg, padding: theme.spacing.md }}>
+                <View style={{
+                    marginBottom: theme.spacing.lg,
+                    padding: theme.spacing.md,
+                    backgroundColor: `${theme.colors.card}CC`,
+                    borderRadius: theme.borderRadius.lg,
+                    borderWidth: 1,
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    shadowColor: theme.colors.shadow,
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 10,
+                    elevation: 3,
+                }}>
                     <TextInput
                         placeholder="0x..."
                         placeholderTextColor={theme.colors.textSecondary}
@@ -62,13 +106,25 @@ export const SendScreen = ({ navigation }: any) => {
                         onChangeText={setRecipientAddress}
                         style={{ fontSize: theme.fontSize.md, color: theme.colors.text }}
                     />
-                </Card>
+                </View>
 
                 {/* Amount */}
                 <Text style={{ fontSize: theme.fontSize.md, fontWeight: theme.fontWeight.semibold, color: theme.colors.text, marginBottom: theme.spacing.sm }}>
                     Amount
                 </Text>
-                <Card variant="outlined" style={{ marginBottom: theme.spacing.xl, padding: theme.spacing.md }}>
+                <View style={{
+                    marginBottom: theme.spacing.xl,
+                    padding: theme.spacing.md,
+                    backgroundColor: `${theme.colors.card}CC`,
+                    borderRadius: theme.borderRadius.lg,
+                    borderWidth: 1,
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    shadowColor: theme.colors.shadow,
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 10,
+                    elevation: 3,
+                }}>
                     <TextInput
                         placeholder="0.00"
                         placeholderTextColor={theme.colors.textSecondary}
@@ -77,7 +133,7 @@ export const SendScreen = ({ navigation }: any) => {
                         keyboardType="numeric"
                         style={{ fontSize: theme.fontSize.md, color: theme.colors.text }}
                     />
-                </Card>
+                </View>
 
                 <Button
                     title="Send"
@@ -86,7 +142,7 @@ export const SendScreen = ({ navigation }: any) => {
                     fullWidth
                 />
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 };
 

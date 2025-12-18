@@ -13,6 +13,7 @@ import {
     TextInput,
     Alert,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../theme/ThemeProvider';
 import { useWalletStore } from '../../store/walletStore';
@@ -37,24 +38,68 @@ export const SwapScreen = ({ navigation }: any) => {
     };
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { borderBottomColor: theme.colors.border, padding: theme.spacing.lg }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color={theme.colors.text} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: theme.colors.text, fontSize: theme.fontSize.xl, fontWeight: theme.fontWeight.bold }]}>
-                    Swap
-                </Text>
-                <View style={{ width: 24 }} />
-            </View>
+        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+            <LinearGradient
+                colors={[theme.colors.gradientStart, theme.colors.gradientMiddle, theme.colors.gradientEnd]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={{
+                    paddingTop: 60,
+                    paddingHorizontal: theme.spacing.lg,
+                    paddingBottom: theme.spacing.xl,
+                    borderBottomLeftRadius: 32,
+                    borderBottomRightRadius: 32,
+                    borderWidth: 1,
+                    borderTopWidth: 0,
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    shadowColor: theme.colors.primary,
+                    shadowOffset: { width: 0, height: 8 },
+                    shadowOpacity: 0.3,
+                    shadowRadius: 16,
+                    elevation: 8,
+                }}
+            >
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <TouchableOpacity
+                        onPress={() => navigation.goBack()}
+                        style={{
+                            width: 40,
+                            height: 40,
+                            borderRadius: 20,
+                            backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderWidth: 1.5,
+                            borderColor: 'rgba(255, 255, 255, 0.3)',
+                        }}
+                    >
+                        <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+                    </TouchableOpacity>
+                    <Text style={{ color: '#FFFFFF', fontSize: theme.fontSize.xxl, fontWeight: theme.fontWeight.bold }}>
+                        Swap
+                    </Text>
+                    <View style={{ width: 40 }} />
+                </View>
+            </LinearGradient>
 
             <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: theme.spacing.lg }}>
                 {/* From */}
                 <Text style={{ fontSize: theme.fontSize.md, fontWeight: theme.fontWeight.semibold, color: theme.colors.text, marginBottom: theme.spacing.sm }}>
                     From
                 </Text>
-                <Card variant="outlined" style={{ marginBottom: theme.spacing.md, padding: theme.spacing.md }}>
+                <View style={{
+                    marginBottom: theme.spacing.md,
+                    padding: theme.spacing.md,
+                    backgroundColor: `${theme.colors.card}CC`,
+                    borderRadius: theme.borderRadius.lg,
+                    borderWidth: 1,
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    shadowColor: theme.colors.shadow,
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 10,
+                    elevation: 3,
+                }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <TextInput
                             placeholder="0.00"
@@ -68,27 +113,50 @@ export const SwapScreen = ({ navigation }: any) => {
                             {fromToken}
                         </Text>
                     </View>
-                </Card>
+                </View>
 
                 {/* Swap Icon */}
                 <View style={{ alignItems: 'center', marginVertical: theme.spacing.md }}>
-                    <View style={{
-                        width: 40,
-                        height: 40,
-                        borderRadius: 20,
-                        backgroundColor: theme.colors.primary,
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
+                    <LinearGradient
+                        colors={[`${theme.colors.primary}E6`, `${theme.colors.secondary}E6`]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={{
+                            width: 48,
+                            height: 48,
+                            borderRadius: 24,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderWidth: 1.5,
+                            borderColor: 'rgba(255, 255, 255, 0.3)',
+                            shadowColor: theme.colors.primary,
+                            shadowOffset: { width: 0, height: 4 },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 10,
+                            elevation: 6,
+                        }}
+                    >
                         <Ionicons name="swap-vertical" size={24} color="#FFFFFF" />
-                    </View>
+                    </LinearGradient>
                 </View>
 
                 {/* To */}
                 <Text style={{ fontSize: theme.fontSize.md, fontWeight: theme.fontWeight.semibold, color: theme.colors.text, marginBottom: theme.spacing.sm }}>
                     To
                 </Text>
-                <Card variant="outlined" style={{ marginBottom: theme.spacing.xl, padding: theme.spacing.md }}>
+                <View style={{
+                    marginBottom: theme.spacing.xl,
+                    padding: theme.spacing.md,
+                    backgroundColor: `${theme.colors.card}CC`,
+                    borderRadius: theme.borderRadius.lg,
+                    borderWidth: 1,
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    shadowColor: theme.colors.shadow,
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 10,
+                    elevation: 3,
+                }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <TextInput
                             placeholder="0.00"
@@ -102,7 +170,7 @@ export const SwapScreen = ({ navigation }: any) => {
                             {toToken}
                         </Text>
                     </View>
-                </Card>
+                </View>
 
                 <Button
                     title="Swap"
@@ -111,7 +179,7 @@ export const SwapScreen = ({ navigation }: any) => {
                     fullWidth
                 />
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 };
 
